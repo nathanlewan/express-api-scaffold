@@ -21,7 +21,16 @@ exports.scaffold_webserver = (globalConfigs) => {
         }
     }
 
+    app.use(express.json());
 
+    app.use(
+        (req, res, next) => {
+            req.globalEnvironment = globalConfigs
+            next()
+        }
+    )
+    
+    app.use(middleware.authHandler)
 
     return {
         app: app,

@@ -21,6 +21,16 @@ const webProtocol_schemaValidator = validate({
     default: 'http'
 })
 
+const authEnabled_schemaValidator = validate({
+    type: Boolean,
+    default: false
+})
+
+const authToken_schemaValidator = validate({
+    type: String,
+    default: "hcc-auth 12345678901234567890",
+    min: 20
+})
 
 
 exports.envFileValid = (envFileLocation) => {
@@ -32,7 +42,9 @@ exports.envFileValid = (envFileLocation) => {
         let globalEnvironmentEnvData = {
             hostname: hostname_schemaValidator.normalize(process.env.hostname),
             port: port_schemaValidator.normalize(process.env.port),
-            webProtocol: webProtocol_schemaValidator.normalize(process.env.webProtocol)
+            webProtocol: webProtocol_schemaValidator.normalize(process.env.webProtocol),
+            authEnabled: authEnabled_schemaValidator.normalize(process.env.authEnabled),
+            authToken: authToken_schemaValidator.normalize(process.env.authToken)
         }
 
         return globalEnvironmentEnvData
