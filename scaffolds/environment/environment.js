@@ -32,6 +32,11 @@ const authToken_schemaValidator = validate({
     min: 20
 })
 
+const diagRoutesEnabled_schemaValidator = validate({
+    type: Boolean,
+    default: false
+})
+
 
 exports.envFileValid = (envFileLocation) => {
 
@@ -44,7 +49,8 @@ exports.envFileValid = (envFileLocation) => {
             port: port_schemaValidator.normalize(process.env.port),
             webProtocol: webProtocol_schemaValidator.normalize(process.env.webProtocol),
             authEnabled: authEnabled_schemaValidator.normalize(process.env.authEnabled),
-            authToken: authToken_schemaValidator.normalize(process.env.authToken)
+            authToken: authToken_schemaValidator.normalize(process.env.authToken),
+            diagRoutesEnabled: diagRoutesEnabled_schemaValidator.normalize((process.env.diagRoutesEnabled === 'true'))
         }
 
         return globalEnvironmentEnvData
