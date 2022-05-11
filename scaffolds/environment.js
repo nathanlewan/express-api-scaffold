@@ -1,29 +1,47 @@
 const errHandler = require('../utils/errorHandler');
-const validate = require('critiq');
+const validate = require('fully-typed');
+
+
+const port_schemaValidator = validate({
+    type: Number,
+    default: 8080,
+    min: 1,
+    integer: true
+})
+
+const hostname_schemaValidator = validate({
+    type: String,
+    minLength: 1,
+    default: 'localhost'
+})
+
+const webProtocol_schemaValidator = validate({
+    type: String,
+    enum: ['http','https'],
+    default: 'http'
+})
+
 
 
 exports.envFileValid = (envFileLocation) => {
 
-    let payload = ""
-       
-    let config = {
-    
-        hostname:['string','required'],
-        port:['integer','min-3', 'required'],
-        webProtocol: ['string','min-4','max-5', 'required']
-        
-    }
-    
-    validate.validate(config, payload, function(err,result){
-        
-        if(err){
-            console.log(err);
-            return
+    try {
+
+        require('dotenv').config(envFileLocation);
+
+        let globalEnvironmentEnvData = {
+            hostname: hostname_schemaValidator.normalize(process.env.hostname),
+            port: port_schemaValidator.normalize(process.env.port),
+            webProtocol: webProtocol_schemaValidator.normalize(process.env.webProtocol)
         }
-        console.log('Hooray! Everything is validated')
-        console.log(result)
-        
-    })
+
+        return globalEnvironmentEnvData
+
+    } catch (err) {
+        errHandler(err)
+        return false
+    }
+
 }
 
 
@@ -32,15 +50,8 @@ exports.scaffold_env = (envFileLocation) => {
 
     try {
 
-        if (this.envFileValid(envFileLocation)) {
-            require('dotenv').config(envFileLocation);
-        }
-        
-        return {
-            "hostname": process.env.hostname,
-            "port": process.env.port,
-            "webProtocol": process.env.webProtocol
-        }
+        let validGlobalConfig = this.envFileValid(envFileLocation)
+        return validGlobalConfig
         
     } catch (err) {errHandler(err)}
 

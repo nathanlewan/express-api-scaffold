@@ -17,13 +17,13 @@
   },
   "homepage": "https://github.com/nathanlewan/express-api-scaffold#readme",
   "dependencies": {
-    "critiq": "2.0.2",
     "dotenv": "16.0.0",
     "express": "4.18.1",
+    "fully-typed": "2.1.1",
     "socket.io": "4.5.0"
   },
   "devDependencies": {
-    "@types/dotenv": "^8.2.0",
-    "@types/validator": "^13.7.2"
+    "@types/dotenv": "8.2.0",
+    "@types/validator": "13.7.2"
   }
 }
