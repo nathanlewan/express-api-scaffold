@@ -1,4 +1,4 @@
-const errHandler = require('../utils/errorHandler');
+const errHandler = require('../../utils/errorHandler');
 const validate = require('fully-typed');
 
 
