@@ -1,5 +1,6 @@
 const errHandler = require('../../utils/errorHandler');
 const validate = require('fully-typed');
+const path = require('path');
 
 
 const port_schemaValidator = validate({
@@ -37,6 +38,18 @@ const diagRoutesEnabled_schemaValidator = validate({
     default: false
 })
 
+const httpsKeyPath_schemaValidator = validate({
+    type: String,
+    default: path.join(__dirname, 'certs/key.pem'),
+    pattern: /^.*[a-z].*.pem$/i
+})
+
+const httpsCertPath_schemaValidator = validate({
+    type: String,
+    default:  path.join(__dirname, 'certs/cert.pem'),
+    pattern: /^.*[a-z].*.pem$/i
+})
+
 
 exports.envFileValid = (envFileLocation) => {
 
@@ -48,9 +61,11 @@ exports.envFileValid = (envFileLocation) => {
             hostname: hostname_schemaValidator.normalize(process.env.hostname),
             port: port_schemaValidator.normalize(process.env.port),
             webProtocol: webProtocol_schemaValidator.normalize(process.env.webProtocol),
-            authEnabled: authEnabled_schemaValidator.normalize(process.env.authEnabled),
+            authEnabled: authEnabled_schemaValidator.normalize((process.env.authEnabled === 'true')),
             authToken: authToken_schemaValidator.normalize(process.env.authToken),
-            diagRoutesEnabled: diagRoutesEnabled_schemaValidator.normalize((process.env.diagRoutesEnabled === 'true'))
+            diagRoutesEnabled: diagRoutesEnabled_schemaValidator.normalize((process.env.diagRoutesEnabled === 'true')),
+            httpsKeyPath: httpsKeyPath_schemaValidator.normalize(process.env.httpsKeyPath),
+            httpsCertPath: httpsCertPath_schemaValidator.normalize(process.env.httpsCertPath)
         }
 
         return globalEnvironmentEnvData
