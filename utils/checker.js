@@ -3,27 +3,27 @@ module.exports.isEmpty = (variableBeingTested) => {
 
     try {
         if (variableBeingTested === null || variableBeingTested === undefined || variableBeingTested === "") {
-            return true
+            return true;
         } else {
-            return false
-        }
+            return false;
+        };
     } catch (err) {
         // if there's an error, assume it's empty
-        return true
-    }
+        return true;
+    };
 
-}
+};
 
 module.exports.isAuthorized = ( isRequired, givenToken, requiredToken ) => {
 
     if (isRequired === false) {
-        return true
-    }
+        return true;
+    };
 
     if (givenToken === requiredToken) {
-        return true
+        return true;
     } else {
-        return false
-    }
+        return false;
+    };
 
-}
+};

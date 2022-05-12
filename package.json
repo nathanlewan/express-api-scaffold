@@ -1,6 +1,6 @@
 {
   "name": "express-api-scaffold",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A base environment for creating a RESTful API with expressjs and socket-io",
   "main": "index.js",
   "scripts": {

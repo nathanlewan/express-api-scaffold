@@ -1,15 +1,15 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const loggingService = require('../environment/services/loggerService')
+const loggingService = require('../environment/services/loggerService');
 const middleware = {
     authHandler: require('./middlewares/authorization')
-}
+};
 
 exports.scaffold_webserver = (globalConfigs) => {
 
-    let logger = loggingService(globalConfigs)
-    let app = express()
+    let logger = loggingService(globalConfigs);
+    let app = express();
     let baseServer = false;
     let Server = false;
 
@@ -19,14 +19,13 @@ exports.scaffold_webserver = (globalConfigs) => {
             baseServer = require('http');
             Server = baseServer.createServer(app);
             Server.listen(globalConfigs.port, () => {
-                console.log(`server running at: ${globalConfigs.webProtocol}://${globalConfigs.hostname}:${globalConfigs.port}`)
+                console.log(`server running at: ${globalConfigs.webProtocol}://${globalConfigs.hostname}:${globalConfigs.port}`);
             });
 
             break;
         }
 
         case "https": {
-
             let sslCertPath = globalConfigs.httpsCertPath || "";
             let sslKeyPath = globalConfigs.httpsKeyPath || "";
 
@@ -50,7 +49,7 @@ exports.scaffold_webserver = (globalConfigs) => {
             baseServer = require( 'https' );
             Server = baseServer.createServer(httpsOptions, app);
             Server.listen(globalConfigs.port, () => {
-                console.log(`server running at: ${globalConfigs.webProtocol}://${globalConfigs.hostname}:${globalConfigs.port}`)
+                console.log(`server running at: ${globalConfigs.webProtocol}://${globalConfigs.hostname}:${globalConfigs.port}`);
             });
 
             break;
@@ -65,12 +64,12 @@ exports.scaffold_webserver = (globalConfigs) => {
             req.logger = logger
             next()
         }
-    )
-    
-    app.use(middleware.authHandler)
+    );
+
+    app.use(middleware.authHandler);
 
     return {
         app: app,
         server: Server
-    }
-}
+    };
+};
