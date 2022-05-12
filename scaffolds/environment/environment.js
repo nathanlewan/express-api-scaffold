@@ -8,53 +8,53 @@ const port_schemaValidator = validate({
     default: 8080,
     min: 1,
     integer: true
-})
+});
 
 const hostname_schemaValidator = validate({
     type: String,
     minLength: 1,
     default: 'localhost'
-})
+});
 
 const webProtocol_schemaValidator = validate({
     type: String,
     enum: ['http','https'],
     default: 'http'
-})
+});
 
 const authEnabled_schemaValidator = validate({
     type: Boolean,
     default: false
-})
+});
 
 const authToken_schemaValidator = validate({
     type: String,
     default: "hcc-auth 12345678901234567890",
     min: 20
-})
+});
 
 const diagRoutesEnabled_schemaValidator = validate({
     type: Boolean,
     default: false
-})
+});
 
 const httpsKeyPath_schemaValidator = validate({
     type: String,
     default: path.join(__dirname, 'certs/key.pem'),
     pattern: /^.*.pem$/i
-})
+});
 
 const httpsCertPath_schemaValidator = validate({
     type: String,
-    default:  path.join(__dirname, 'certs/cert.pem'),
+    default: path.join(__dirname, 'certs/cert.pem'),
     pattern: /^.*.pem$/i
-})
+});
 
 const logPath_schemaValidator = validate({
     type: String,
-    default:  path.join(__dirname, '../../serverlog.log'),
+    default: path.join(__dirname, '../../serverlog.log'),
     pattern: /^.*.log$/i
-})
+});
 
 
 exports.envFileValid = (envFileLocation) => {
@@ -75,14 +75,14 @@ exports.envFileValid = (envFileLocation) => {
             logPath: logPath_schemaValidator.normalize(process.env.logPath)
         }
 
-        return globalEnvironmentEnvData
+        return globalEnvironmentEnvData;
 
     } catch (err) {
-        errHandler(err)
-        return false
-    }
+        errHandler(err);
+        return false;
+    };
 
-}
+};
 
 
 
@@ -90,9 +90,9 @@ exports.scaffold_env = (envFileLocation) => {
 
     try {
 
-        let validGlobalConfig = this.envFileValid(envFileLocation)
-        return validGlobalConfig
-        
-    } catch (err) {errHandler(err)}
+        let validGlobalConfig = this.envFileValid(envFileLocation);
+        return validGlobalConfig;
 
-}
+    } catch (err) {errHandler(err)};
+
+};
