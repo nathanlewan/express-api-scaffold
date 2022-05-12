@@ -1,12 +1,14 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const loggingService = require('../environment/services/loggerService')
 const middleware = {
     authHandler: require('./middlewares/authorization')
 }
 
 exports.scaffold_webserver = (globalConfigs) => {
 
+    let logger = loggingService(globalConfigs)
     let app = express()
     let baseServer = false;
     let Server = false;
@@ -60,6 +62,7 @@ exports.scaffold_webserver = (globalConfigs) => {
     app.use(
         (req, res, next) => {
             req.globalEnvironment = globalConfigs
+            req.logger = logger
             next()
         }
     )

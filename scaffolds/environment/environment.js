@@ -41,13 +41,19 @@ const diagRoutesEnabled_schemaValidator = validate({
 const httpsKeyPath_schemaValidator = validate({
     type: String,
     default: path.join(__dirname, 'certs/key.pem'),
-    pattern: /^.*[a-z].*.pem$/i
+    pattern: /^.*.pem$/i
 })
 
 const httpsCertPath_schemaValidator = validate({
     type: String,
     default:  path.join(__dirname, 'certs/cert.pem'),
-    pattern: /^.*[a-z].*.pem$/i
+    pattern: /^.*.pem$/i
+})
+
+const logPath_schemaValidator = validate({
+    type: String,
+    default:  path.join(__dirname, '../../serverlog.log'),
+    pattern: /^.*.log$/i
 })
 
 
@@ -65,7 +71,8 @@ exports.envFileValid = (envFileLocation) => {
             authToken: authToken_schemaValidator.normalize(process.env.authToken),
             diagRoutesEnabled: diagRoutesEnabled_schemaValidator.normalize((process.env.diagRoutesEnabled === 'true')),
             httpsKeyPath: httpsKeyPath_schemaValidator.normalize(process.env.httpsKeyPath),
-            httpsCertPath: httpsCertPath_schemaValidator.normalize(process.env.httpsCertPath)
+            httpsCertPath: httpsCertPath_schemaValidator.normalize(process.env.httpsCertPath),
+            logPath: logPath_schemaValidator.normalize(process.env.logPath)
         }
 
         return globalEnvironmentEnvData

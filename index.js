@@ -1,6 +1,7 @@
 const environment = require('./scaffolds/environment/environment');
 const webserver = require('./scaffolds/webserver/webserver');
 const socketIoServer = require('./scaffolds/socketio/socketio');
+const Logger = require('./scaffolds/environment/services/loggerService')
 const routes = {
     diag: require('./scaffolds/webserver/routes/diag')
 }
