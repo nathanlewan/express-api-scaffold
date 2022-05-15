@@ -20,7 +20,7 @@ module.exports = (envFileLocation) => {
         "globalEnvironment": globalEnvironment,
         "serverApp": serverWebApp.app,
         "socketIoApp": socketIoApp,
-        "logger": Logger
+        "logger": Logger(globalEnvironment)
     };
 
 };
