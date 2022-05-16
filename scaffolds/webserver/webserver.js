@@ -8,7 +8,7 @@ const middleware = {
 
 exports.scaffold_webserver = (globalConfigs) => {
 
-    let logger = loggingService(globalConfigs);
+    let logger = loggingService(globalConfigs.logPath);
     let app = express();
     let baseServer = false;
     let Server = false;

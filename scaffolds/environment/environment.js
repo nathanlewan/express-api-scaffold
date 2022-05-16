@@ -52,8 +52,7 @@ const httpsCertPath_schemaValidator = validate({
 
 const logPath_schemaValidator = validate({
     type: String,
-    default: path.join(__dirname, '../../serverlog.log'),
-    pattern: /^.*.log$/i
+    default: path.join(__dirname, '../../serverlog.log')
 });
 
 
@@ -61,7 +60,7 @@ exports.envFileValid = (envFileLocation) => {
 
     try {
 
-        require('dotenv').config(envFileLocation);
+        require('dotenv').config({path: path.normalize(envFileLocation)});
 
         let globalEnvironmentEnvData = {
             hostname: hostname_schemaValidator.normalize(process.env.hostname),
@@ -91,6 +90,17 @@ exports.scaffold_env = (envFileLocation) => {
     try {
 
         let validGlobalConfig = this.envFileValid(envFileLocation);
+
+        process.env.logPath = validGlobalConfig.logPath;
+        process.env.httpsCertPath = validGlobalConfig.httpsCertPath;
+        process.env.httpsKeyPath = validGlobalConfig.httpsKeyPath;
+        process.env.diagRoutesEnabled = validGlobalConfig.diagRoutesEnabled;
+        process.env.authToken = validGlobalConfig.authToken;
+        process.env.authEnabled = validGlobalConfig.authEnabled;
+        process.env.webProtocol = validGlobalConfig.webProtocol;
+        process.env.port = validGlobalConfig.port;
+        process.env.hostname = validGlobalConfig.hostname;
+        
         return validGlobalConfig;
 
     } catch (err) {errHandler(err)};

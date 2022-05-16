@@ -1,5 +1,5 @@
 const fs = require('fs');
-const logger = require('../scaffolds/environment/services/loggerService' );
+const logger = require('../scaffolds/environment/services/loggerService' )(process.env.logPath);
 
 const utils = {
     "checker": require('./checker')

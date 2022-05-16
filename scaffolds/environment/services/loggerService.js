@@ -1,6 +1,7 @@
 const pino = require('pino');
+const path = require('path');
 
-module.exports = (globalConfigs) => {
+module.exports = (logPath) => {
     return pino(
     {
         transport: {
@@ -10,7 +11,7 @@ module.exports = (globalConfigs) => {
                 levelFirst: true,
                 ignore: 'hostname,pid',
                 translateTime: 'SYS:yyyy-dd-mm, h:MM:ss TT Z',
-                destination: (globalConfigs.logPath)
+                destination: (path.normalize(logPath))
             }
         }
     }); 

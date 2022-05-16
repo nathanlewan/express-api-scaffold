@@ -41,3 +41,7 @@ environment variables can be set using a .env file
 - **httpsKeyPath**: [path to cert key in pem]
 - **httpsCertPath**: [path to cert in pem]
 - **logPath**: [path/to/log.log]
+
+req object includes these added objects:
+ - **req.globalEnvironment**
+ - **req.logger**

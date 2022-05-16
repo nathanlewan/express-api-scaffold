@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 const path = require('path')
-const logger = require ('../scaffolds/environment/services/loggerService');
+const logger = require ('../scaffolds/environment/services/loggerService')(process.env.logPath);
 
 
 exports.linuxShell = (scriptPath, scriptName) => {
