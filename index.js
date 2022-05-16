@@ -11,28 +11,29 @@ const routes = {
 
 module.exports = (envFileLocation) => {
     
-    process.env.scaffolding = {};
+    // define global object
+    global.Scaffold = {}
 
     let globalEnvironment = environment.scaffold_env(envFileLocation);
-    process.env.scaffolding.globalEnvironment = globalEnvironment;
-    process.env.scaffolding.projectEnvironment = {};
+    global.Scaffold.globalEnvironment = globalEnvironment;
+    global.Scaffold.projectEnvironment = {};
 
-    let logger = Logger(process.env.scaffolding.globalEnvironment.logPath);
-    process.env.scaffolding.logger = logger
+    let logger = Logger(global.Scaffold.globalEnvironment.logPath);
+    global.Scaffold.logger = logger
 
     let serverWebApp = webserver.scaffold_webserver(
-        process.env.scaffolding.globalEnvironment.hostname,
-        process.env.scaffolding.globalEnvironment.webProtocol,
-        process.env.scaffolding.globalEnvironment.port,
-        process.env.scaffolding.globalEnvironment.httpsCertPath,
-        process.env.scaffolding.globalEnvironment.httpsKeyPath
+        global.Scaffold.globalEnvironment.hostname,
+        global.Scaffold.globalEnvironment.webProtocol,
+        global.Scaffold.globalEnvironment.port,
+        global.Scaffold.globalEnvironment.httpsCertPath,
+        global.Scaffold.globalEnvironment.httpsKeyPath
     );
-    process.env.scaffolding.webServer = serverWebApp.server;
-    process.env.scaffolding.webApp = serverWebApp.app;
+    global.Scaffold.webServer = serverWebApp.server;
+    global.Scaffold.webApp = serverWebApp.app;
 
-    let socketIoApp = socketIoServer.scaffold_socketIo(process.env.scaffolding.webServer);
-    process.env.scaffolding.socketIoApp = socketIoApp;
+    let socketIoApp = socketIoServer.scaffold_socketIo(global.Scaffold.webServer);
+    global.Scaffold.socketIoApp = socketIoApp;
 
-    process.env.scaffolding.webApp.use('/diag', routes.diag());
+    global.Scaffold.webApp.use('/diag', routes.diag());
 
 };

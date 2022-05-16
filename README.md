@@ -31,7 +31,7 @@ scaffolding.serverApp.use('/examples', routes.example())
 process.env.logger.info('test')
 </code>
 ```
-environment variables can be set using a .env file, and will be added to process.env.scaffolding.globalEnvironment
+environment variables can be set using a .env file, and will be added to global.Scaffold.globalEnvironment
 - **hostname**: [name of server]
 - **port**: [port of server]
 - **webProtocol**: [http/https]
@@ -43,9 +43,9 @@ environment variables can be set using a .env file, and will be added to process
 - **logPath**: [path/to/log.log]
 
 req object includes these added objects:
- - **process.env.scaffolding.globalEnvironment**
- - **process.env.scaffolding.projectEnvironment**
- - **process.env.scaffolding.logger**
- - **process.env.scaffolding.webServer**
- - **process.env.scaffolding.webApp**
- - **process.env.scaffolding.socketIoApp**
+ - **global.Scaffold.globalEnvironment**
+ - **global.Scaffold.projectEnvironment**
+ - **global.Scaffold.logger**
+ - **global.Scaffold.webServer**
+ - **global.Scaffold.webApp**
+ - **global.Scaffold.socketIoApp**
