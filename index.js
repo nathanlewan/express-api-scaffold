@@ -17,15 +17,15 @@ module.exports = (envFileLocation) => {
     process.env.scaffolding.globalEnvironment = globalEnvironment;
     process.env.scaffolding.projectEnvironment = {};
 
-    let logger = Logger(process.env.globalEnvironment.logPath);
+    let logger = Logger(process.env.scaffolding.globalEnvironment.logPath);
     process.env.scaffolding.logger = logger
 
     let serverWebApp = webserver.scaffold_webserver(
-        process.env.globalEnvironment.hostname,
-        process.env.globalEnvironment.webProtocol,
-        process.env.globalEnvironment.port,
-        process.env.globalEnvironment.httpsCertPath,
-        process.env.globalEnvironment.httpsKeyPath
+        process.env.scaffolding.globalEnvironment.hostname,
+        process.env.scaffolding.globalEnvironment.webProtocol,
+        process.env.scaffolding.globalEnvironment.port,
+        process.env.scaffolding.globalEnvironment.httpsCertPath,
+        process.env.scaffolding.globalEnvironment.httpsKeyPath
     );
     process.env.scaffolding.webServer = serverWebApp.server;
     process.env.scaffolding.webApp = serverWebApp.app;
@@ -33,6 +33,6 @@ module.exports = (envFileLocation) => {
     let socketIoApp = socketIoServer.scaffold_socketIo(process.env.scaffolding.webServer);
     process.env.scaffolding.socketIoApp = socketIoApp;
 
-    serverWebApp.app.use('/diag', routes.diag());
+    process.env.scaffolding.webApp.use('/diag', routes.diag());
 
 };
