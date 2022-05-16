@@ -64,7 +64,7 @@ exports.envFileValid = (envFileLocation) => {
 
         let globalEnvironmentEnvData = {
             hostname: hostname_schemaValidator.normalize(process.env.hostname),
-            port: port_schemaValidator.normalize(process.env.port),
+            port: port_schemaValidator.normalize(Number(process.env.port)),
             webProtocol: webProtocol_schemaValidator.normalize(process.env.webProtocol),
             authEnabled: authEnabled_schemaValidator.normalize((process.env.authEnabled === 'true')),
             authToken: authToken_schemaValidator.normalize(process.env.authToken),
