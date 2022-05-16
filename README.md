@@ -2,10 +2,10 @@
 ### A base environment for creating a RESTful API with expressjs. Supply your routes and the scaffolding will take care of:
 
  - Setting up the http/https server
- - Setting up the Socket-io server
+ - Setting up the Socket-io server [preliminary]
  - Providing Logging functionality
  - Providing Authentication vi Auth Headers
- - Making .env vars available to your Routes
+ - Making and validating .env vars using dotenv
 
 ## example implementation
 
@@ -22,16 +22,16 @@ const routes = {
 const scaffolding = scaffold('./.env')
 
 // log out the .env derived environment variables
-console.log(scaffolding.globalEnvironment)
+console.log(process.env.globalEnvironment)
 
 // call your route
 scaffolding.serverApp.use('/examples', routes.example())
 
 // logging example
-scaffolding.logger.info('test')
+process.env.logger.info('test')
 </code>
 ```
-environment variables can be set using a .env file
+environment variables can be set using a .env file, and will be added to process.env.scaffolding.globalEnvironment
 - **hostname**: [name of server]
 - **port**: [port of server]
 - **webProtocol**: [http/https]
@@ -43,5 +43,9 @@ environment variables can be set using a .env file
 - **logPath**: [path/to/log.log]
 
 req object includes these added objects:
- - **req.globalEnvironment**
- - **req.logger**
+ - **process.env.scaffolding.globalEnvironment**
+ - **process.env.scaffolding.projectEnvironment**
+ - **process.env.scaffolding.logger**
+ - **process.env.scaffolding.webServer**
+ - **process.env.scaffolding.webApp**
+ - **process.env.scaffolding.socketIoApp**

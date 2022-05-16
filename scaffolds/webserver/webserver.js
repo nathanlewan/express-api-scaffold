@@ -1,33 +1,31 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const loggingService = require('../environment/services/loggerService');
 const middleware = {
     authHandler: require('./middlewares/authorization')
 };
 
-exports.scaffold_webserver = (globalConfigs) => {
+exports.scaffold_webserver = (hostname, webProtocol, port, httpsCertPath, httpsKeyPath) => {
 
-    let logger = loggingService(globalConfigs.logPath);
     let app = express();
     let baseServer = false;
     let Server = false;
 
-    switch (globalConfigs.webProtocol) {
+    switch (webProtocol) {
 
         case "http": {
             baseServer = require('http');
             Server = baseServer.createServer(app);
-            Server.listen(globalConfigs.port, () => {
-                console.log(`server running at: ${globalConfigs.webProtocol}://${globalConfigs.hostname}:${globalConfigs.port}`);
+            Server.listen(port, () => {
+                console.log(`server running at: ${webProtocol}://${hostname}:${port}`);
             });
 
             break;
         }
 
         case "https": {
-            let sslCertPath = globalConfigs.httpsCertPath || "";
-            let sslKeyPath = globalConfigs.httpsKeyPath || "";
+            let sslCertPath = httpsCertPath || "";
+            let sslKeyPath = httpsKeyPath || "";
 
             if ( sslCertPath === "" ) {
                 // error no cert file
@@ -48,8 +46,8 @@ exports.scaffold_webserver = (globalConfigs) => {
 
             baseServer = require( 'https' );
             Server = baseServer.createServer(httpsOptions, app);
-            Server.listen(globalConfigs.port, () => {
-                console.log(`server running at: ${globalConfigs.webProtocol}://${globalConfigs.hostname}:${globalConfigs.port}`);
+            Server.listen(port, () => {
+                console.log(`server running at: ${webProtocol}://${hostname}:${port}`);
             });
 
             break;
@@ -57,15 +55,6 @@ exports.scaffold_webserver = (globalConfigs) => {
     }
 
     app.use(express.json());
-
-    app.use(
-        (req, res, next) => {
-            req.globalEnvironment = globalConfigs
-            req.logger = logger
-            next()
-        }
-    );
-
     app.use(middleware.authHandler);
 
     return {

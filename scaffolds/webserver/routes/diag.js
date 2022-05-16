@@ -5,8 +5,8 @@ module.exports = () => {
 
     router.use( (req, res, next) => {
 
-        if (req.globalEnvironment.diagRoutesEnabled === false) {
-            req.logger.info('diag route disabled');
+        if (process.env.scaffolding.globalEnvironment.diagRoutesEnabled === false) {
+            process.env.scaffolding.logger.info('diag route disabled');
             res.send('disabled');
             return;
         };
@@ -16,7 +16,7 @@ module.exports = () => {
     });
 
     router.get('/test', (req, res) => {
-        req.logger.info('diag route enabled');
+        process.env.scaffolding.logger.info('diag route enabled');
         res.send('Test Landing Page');
     });
 
