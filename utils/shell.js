@@ -19,3 +19,19 @@ exports.linuxShell = (scriptPath, scriptName) => {
     });
 
 };
+
+exports.powerShell = (scriptPath, scriptName) => {
+
+    return new Promise((resolve, reject) => {
+        const myShellScript = exec( `pwsh.LNK ".\\${scriptPath}\\${scriptName}"`, (error, stdout, stderr) => {
+
+            if (error) { resolve(error.message) };
+            if (stderr) { resolve(stderr) };
+
+            resolve(stdout);
+
+        });
+
+    });
+
+};
