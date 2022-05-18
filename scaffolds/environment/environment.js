@@ -64,11 +64,11 @@ exports.envFileValid = (envFileLocation) => {
 
         let globalEnvironmentEnvData = {
             hostname: hostname_schemaValidator.normalize(process.env.hostname),
-            port: port_schemaValidator.normalize(Number(process.env.port)),
+            port: port_schemaValidator.normalize(Number(process.env.port) || 8080),
             webProtocol: webProtocol_schemaValidator.normalize(process.env.webProtocol),
-            authEnabled: authEnabled_schemaValidator.normalize((process.env.authEnabled === 'true')),
+            authEnabled: authEnabled_schemaValidator.normalize((process.env.authEnabled === 'true') || false),
             authToken: authToken_schemaValidator.normalize(process.env.authToken),
-            diagRoutesEnabled: diagRoutesEnabled_schemaValidator.normalize((process.env.diagRoutesEnabled === 'true')),
+            diagRoutesEnabled: diagRoutesEnabled_schemaValidator.normalize((process.env.diagRoutesEnabled === 'true') || true),
             httpsKeyPath: httpsKeyPath_schemaValidator.normalize(process.env.httpsKeyPath),
             httpsCertPath: httpsCertPath_schemaValidator.normalize(process.env.httpsCertPath),
             logPath: logPath_schemaValidator.normalize(process.env.logPath)
