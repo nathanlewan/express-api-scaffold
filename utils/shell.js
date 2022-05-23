@@ -20,10 +20,19 @@ exports.linuxShell = (scriptPath, scriptName) => {
 
 };
 
-exports.powerShell = async (scriptPath, scriptName) => {
+exports.powerShell = (scriptPath, scriptName, scriptArgs) => {
 
     return new Promise((resolve, reject) => {
-        const myShellScript = exec( `pwsh.LNK - File "${scriptPath}\\${scriptName}"`, (error, stdout, stderr) => {
+
+        let fullPath;
+
+        if (scriptArgs) {
+            fullPath = `pwsh.LNK "${scriptPath}\\${scriptName}" ${scriptArgs}`
+        } else {
+            fullPath = `pwsh.LNK "${scriptPath}\\${scriptName}"`
+        }
+
+        const myShellScript = exec( fullPath, (error, stdout, stderr) => {
 
             if (error) { resolve(error.message) };
             if (stderr) { resolve(stderr) };
