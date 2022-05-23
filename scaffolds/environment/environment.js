@@ -55,6 +55,11 @@ const logPath_schemaValidator = validate({
     default: path.join(__dirname, '../../serverlog.log')
 });
 
+const corsDomains_schemaValidator = validate({
+    type: String,
+    default: '*.edu'
+});
+
 
 exports.envFileValid = (envFileLocation) => {
 
@@ -71,7 +76,8 @@ exports.envFileValid = (envFileLocation) => {
             diagRoutesEnabled: diagRoutesEnabled_schemaValidator.normalize((process.env.diagRoutesEnabled === 'true') || true),
             httpsKeyPath: httpsKeyPath_schemaValidator.normalize(process.env.httpsKeyPath),
             httpsCertPath: httpsCertPath_schemaValidator.normalize(process.env.httpsCertPath),
-            logPath: logPath_schemaValidator.normalize(process.env.logPath)
+            logPath: logPath_schemaValidator.normalize(process.env.logPath),
+            corsDomains: corsDomains_schemaValidator.normalize(process.env.corsDomains)
         }
 
         return globalEnvironmentEnvData;
@@ -100,6 +106,7 @@ exports.scaffold_env = (envFileLocation) => {
         process.env.webProtocol = validGlobalConfig.webProtocol;
         process.env.port = validGlobalConfig.port;
         process.env.hostname = validGlobalConfig.hostname;
+        process.env.corsDomains = validGlobalConfig.corsDomains;
         
         return validGlobalConfig;
 
