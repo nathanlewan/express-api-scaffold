@@ -33,7 +33,7 @@ module.exports = (envFileLocation) => {
         );
         global.Scaffold.webServer = serverWebApp.server;
         global.Scaffold.webApp = serverWebApp.app;
-        global.Scafford.errorHandler = errHandler;
+        global.Scaffold.errorHandler = errHandler;
 
         let socketIoApp = socketIoServer.scaffold_socketIo(global.Scaffold.webServer);
         global.Scaffold.socketIoApp = socketIoApp;
