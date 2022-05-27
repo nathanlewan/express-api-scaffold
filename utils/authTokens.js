@@ -1,23 +1,28 @@
 const fetch = require('node-fetch');
+const errHandler = require('./errorHandler');
 
 exports.getAzureAuthToken = async (tenant, secret, clientId) => {
+    try {
+        const params = new URLSearchParams();
+        params.append('client_id', clientId);
+        params.append('scope','https://graph.microsoft.com/.default');
+        params.append('client_secret', secret);
+        params.append('grant_type', 'client_credentials');
 
-    const params = new URLSearchParams();
-    params.append('client_id', clientId);
-    params.append('scope','https://graph.microsoft.com/.default');
-    params.append('client_secret', secret);
-    params.append('grant_type', 'client_credentials');
+        let tokenGeneratorUrl = `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`
 
-    let tokenGeneratorUrl = `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/token`
+        let response = await fetch(tokenGeneratorUrl, {
+            method: 'POST',
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: params
+        })
 
-    let response = await fetch(tokenGeneratorUrl, {
-        method: 'POST',
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: params
-    })
+        let data = await response.json();
 
-    let data = await response.json();
-
-    return data
+        return data
+    } catch (err) {
+        errHandler(err);
+        return {};
+    }
 
 }

@@ -1,3 +1,14 @@
 module.exports = (err, data) => {
-    console.log(err.message);
+    try {
+        if (err) {
+            if (err.message) {
+                console.log(err.message);
+            } else {
+                console.log(err);
+            }
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+        
 };
