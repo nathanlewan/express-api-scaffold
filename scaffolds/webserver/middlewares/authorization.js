@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
             next();
             return;
         } else {
-            global.Scaffold.logger.info('failed authorization attempt');
+            global.Scaffold.logger.error(`!! Failed authorization attempt from ${req.ip} !!`);
             res.send('not authorized');
             return;
         };
